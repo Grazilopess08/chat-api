@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 
-const checktoken = async (token, id, key) => jwt.verify(token, key, (err, decoded) => {
+const checktoken = async (token, key) => jwt.verify(token, key, (err, decoded) => {
     return new Promise((resolve, reject) => {
         jwt.verify(token, key, (err, decoded) => {
           if (err) {
