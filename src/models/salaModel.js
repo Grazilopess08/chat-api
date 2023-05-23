@@ -3,6 +3,27 @@ function listarSalas() {
     return db.findAll("salas")
 }
 
+let buscarSalas = async(idsala)=>{
+    return db.findOne("salas",idsala);
+}
+let pegarMensagens=async(sala)=>{
+    return await db.updateOne("salas",sala,{_id:sala._id});
+}
+
+let buscarMensagens = async (idsala,timestamp)=>{
+    let sala = await buscarSalas(idsala);
+    if(sala.mensagens){
+        let mensagens=[];
+        sala.msgs.forEach((mensagem)=>{
+            if(mensagem.timestamp >= timestamp){
+                mensagens.push(mensagem);
+            }
+        });
+        return mensagens;
+    }
+    return [];
+}
+
 function listarSalas(){
     return[
         {
@@ -29,4 +50,4 @@ function listarSalas(){
 }
 
 
-module.exports = {listarSalas}
+module.exports = {listarSalas,buscarSalas,pegarMensagens,buscarMensagens}
